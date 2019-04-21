@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    android:background="#339946"
+    android:orientation="horizontal">
+
+    <TableRow
+        android:background="#339946">
+
+
+        <ImageView
+            android:id="@+id/img_logo_action"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="13dp"
+            android:layout_weight="100"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/logo_text" />
+
+        <ImageButton
+            android:id="@+id/action_bar_history"
+            android:layout_width="33dp"
+            android:layout_height="29dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_history" />
+
+
+    </TableRow>
+
+</TableLayout>

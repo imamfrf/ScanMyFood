@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1018123596603",
+    "firebase_url": "https://scanmyfood-7b59b.firebaseio.com",
+    "project_id": "scanmyfood-7b59b",
+    "storage_bucket": "scanmyfood-7b59b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1018123596603:android:9ad936085ee2068c",
+        "android_client_info": {
+          "package_name": "com.scanmyfood.imamf.scanmyfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1018123596603-p21i029kqesfnd262vi96du8r83v7s9c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.scanmyfood.imamf.scanmyfood",
+            "certificate_hash": "355fac96883d48e12beeccac3d4ff38071b5e793"
+          }
+        },
+        {
+          "client_id": "1018123596603-n12neoqbe0e1iajgaioe7utmndfvqiul.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCE84clfU8CnGyPGu3UivY_4FDYDXdynNU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1018123596603-n12neoqbe0e1iajgaioe7utmndfvqiul.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
