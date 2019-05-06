@@ -37,6 +37,8 @@ class DownloadWebPage(activity: FoodFact, foodName: String) : AsyncTask<String, 
             return "URL Invalid"
         }
 
+        Log.d("tes123", urls[0])
+
     }
 
     override fun onPostExecute(s: String) {
@@ -49,24 +51,26 @@ class DownloadWebPage(activity: FoodFact, foodName: String) : AsyncTask<String, 
         var protein = ""
         var imgSrc = ""
         var funFact = ""
+        Log.d("tes456", s)
 
         try {
             val jsonObj = JSONObject(s)
             val jsonArr = jsonObj.getJSONArray("result")
 
-            for (i in 0..jsonArr.length()){
-                if (jsonArr.getJSONObject(i).getString("name") == foodName){
-                    id = jsonArr.getJSONObject(0).getString("id")
-                    name = jsonArr.getJSONObject(0).getString("name")
-                    calorie = jsonArr.getJSONObject(0).getString("calorie")
-                    fat = jsonArr.getJSONObject(0).getString("fat")
-                    carb = jsonArr.getJSONObject(0).getString("carb")
-                    protein = jsonArr.getJSONObject(0).getString("protein")
-                    imgSrc = jsonArr.getJSONObject(0).getString("imgSrc")
-                    funFact = jsonArr.getJSONObject(0).getString("funFact")
+            Log.d("tes7", jsonArr.length().toString())
+
+            for (i in 0..jsonArr.length()) {
+                if (jsonArr.getJSONObject(i).getString("name") == foodName) {
+                    id = jsonArr.getJSONObject(i).getString("id")
+                    name = jsonArr.getJSONObject(i).getString("name")
+                    calorie = jsonArr.getJSONObject(i).getString("calorie")
+                    fat = jsonArr.getJSONObject(i).getString("fat")
+                    carb = jsonArr.getJSONObject(i).getString("carb")
+                    protein = jsonArr.getJSONObject(i).getString("protein")
+                    imgSrc = jsonArr.getJSONObject(i).getString("imgSrc")
+                    funFact = jsonArr.getJSONObject(i).getString("funFact")
                 }
             }
-
             Log.d("TES1", jsonArr.length().toString())
 
         } catch (e: JSONException) {
@@ -83,7 +87,7 @@ class DownloadWebPage(activity: FoodFact, foodName: String) : AsyncTask<String, 
             activity.tv_fat_detail.text = food.fat+" gr"
             activity.tv_carb_detail.text = food.carb+" gr"
             activity.tv_pro_detail.text = food.protein+" gr"
-            activity.tv_fun_fact.text = food.funFact+" gr"
+            activity.tv_fun_fact.text = food.funFact
             Glide.with(activity.applicationContext)
                     .load(food.img)
                     .into(activity.img_food_header!!)
@@ -94,7 +98,7 @@ class DownloadWebPage(activity: FoodFact, foodName: String) : AsyncTask<String, 
     @Throws(IOException::class)
     private fun downloadUrl(myUrl: String): String {
         var `is`: InputStream? = null
-        val len = 500
+        val len = 10000
 
         try {
             val url = URL(myUrl)

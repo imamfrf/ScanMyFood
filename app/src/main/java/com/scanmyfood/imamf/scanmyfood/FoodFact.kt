@@ -40,11 +40,12 @@ class FoodFact : AppCompatActivity() {
         formattedDate = df.format(c)
 
 
-        getFoodData()
+        getFoodData(intent.getStringExtra("productName"))
 
         bt_makan.setOnClickListener(object : View.OnClickListener {
             var cal = 0.0f
             override fun onClick(v: View) {
+                addHistory()
                 db.getReference("users").child("001").child("daily").child(formattedDate).addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         cal = java.lang.Float.valueOf(dataSnapshot.value!!.toString())
@@ -76,12 +77,12 @@ class FoodFact : AppCompatActivity() {
 
     }
 
-    fun getFoodData(){
-        val strUrl = "https://api.myjson.com/bins/fnedw"
+    fun getFoodData(foodName: String){
+        val strUrl = "https://api.myjson.com/bins/qmhdo"
         val connMgr = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connMgr.activeNetworkInfo
         if (networkInfo != null && networkInfo.isConnected) {
-            DownloadWebPage(this, intent.getStringExtra("productName")).execute(strUrl)
+            DownloadWebPage(this, foodName).execute(strUrl)
             //DownloadWebPage(this).execute()
             //tv_fun_fact.setText("ok")
 
@@ -90,7 +91,6 @@ class FoodFact : AppCompatActivity() {
             tv_fun_fact.setText("ERROR")
         }
 
-        addHistory()
     }
 
     fun addHistory(){

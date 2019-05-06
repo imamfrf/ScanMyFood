@@ -69,8 +69,11 @@ class HomeFragment : Fragment(), homeHistoryListener {
             camHelper.dispatchTakePictureIntent() }
 
         recV_home = view.recV_home_history
-        recV_home.setHasFixedSize(true)
+        //recV_home.setHasFixedSize(true)
         recV_home.layoutManager = getReverseLinearLayoutManager()
+
+        adapter = HomeHistoryAdapter(list_item, this@HomeFragment, this@HomeFragment)
+
 
         initData()
         getUserData()
@@ -123,6 +126,7 @@ class HomeFragment : Fragment(), homeHistoryListener {
                         if (p1.key == "history"){
                             for (p2 in p1.children){
                                 getFoodData(p2.key.toString())
+                                adapter.notifyDataSetChanged()
                             }
                         }
 
@@ -181,11 +185,11 @@ class HomeFragment : Fragment(), homeHistoryListener {
 
             var productName = result.images[0].classifiers[0].classes[0].className
             var imgSrc = "";
-            if (productName.equals("Apel", ignoreCase = true)) {
-                imgSrc = "https://doktersehat.com/wp-content/uploads/2014/05/apel.jpg"
-            } else if (productName.equals("Kol", ignoreCase = true)) {
-                imgSrc = "https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1521360707/raxkgzgrt44iiebd0krw.jpg"
-            }
+//            if (productName.equals("Apel", ignoreCase = true)) {
+//                imgSrc = "https://doktersehat.com/wp-content/uploads/2014/05/apel.jpg"
+//            } else if (productName.equals("Kol", ignoreCase = true)) {
+//                imgSrc = "https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1521360707/raxkgzgrt44iiebd0krw.jpg"
+//            }
 
 
             if (result.images[0].classifiers[0].classes[0].className != null) {
@@ -223,7 +227,7 @@ class HomeFragment : Fragment(), homeHistoryListener {
     }
 
     fun getFoodData(foodName: String){
-        val strUrl = "https://api.myjson.com/bins/fnedw"
+        val strUrl = "https://api.myjson.com/bins/qmhdo"
         val connMgr = activity!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkInfo = connMgr.activeNetworkInfo
         if (networkInfo != null && networkInfo.isConnected) {
@@ -271,16 +275,17 @@ class HomeFragment : Fragment(), homeHistoryListener {
                 val jsonObj = JSONObject(s)
                 val jsonArr = jsonObj.getJSONArray("result")
 
+                Log.d("tes8", jsonArr.length().toString())
                 for (i in 0..jsonArr.length()){
                     if (jsonArr.getJSONObject(i).getString("name") == foodName){
-                        id = jsonArr.getJSONObject(0).getString("id")
-                        name = jsonArr.getJSONObject(0).getString("name")
-                        calorie = jsonArr.getJSONObject(0).getString("calorie")
-                        fat = jsonArr.getJSONObject(0).getString("fat")
-                        carb = jsonArr.getJSONObject(0).getString("carb")
-                        protein = jsonArr.getJSONObject(0).getString("protein")
-                        imgSrc = jsonArr.getJSONObject(0).getString("imgSrc")
-                        funFact = jsonArr.getJSONObject(0).getString("funFact")
+                        id = jsonArr.getJSONObject(i).getString("id")
+                        name = jsonArr.getJSONObject(i).getString("name")
+                        calorie = jsonArr.getJSONObject(i).getString("calorie")
+                        fat = jsonArr.getJSONObject(i).getString("fat")
+                        carb = jsonArr.getJSONObject(i).getString("carb")
+                        protein = jsonArr.getJSONObject(i).getString("protein")
+                        imgSrc = jsonArr.getJSONObject(i).getString("imgSrc")
+                        funFact = jsonArr.getJSONObject(i).getString("funFact")
                     }
                 }
 
@@ -292,15 +297,15 @@ class HomeFragment : Fragment(), homeHistoryListener {
             val food = Food(id, name, calorie, fat, carb, protein, imgSrc, funFact)
             home.list_item.add(food)
             home.adapter = HomeHistoryAdapter(home.list_item, this@HomeFragment, this@HomeFragment)
-            home.adapter.notifyDataSetChanged()
             home.recV_home.adapter = home.adapter
+            home.adapter.notifyDataSetChanged()
 
         }
 
         @Throws(IOException::class)
         private fun downloadUrl(myUrl: String): String {
             var `is`: InputStream? = null
-            val len = 500
+            val len = 10000
 
             try {
                 val url = URL(myUrl)
