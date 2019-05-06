@@ -7,63 +7,46 @@
     tools:context=".FoodFact">
 
     <android.support.design.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/background_light"
         android:fitsSystemWindows="true"
-        >
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <android.support.design.widget.AppBarLayout
             android:id="@+id/main.appbar"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             android:fitsSystemWindows="true"
-            >
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
             <android.support.design.widget.CollapsingToolbarLayout
                 android:id="@+id/main.collapsing"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimary"
-                app:expandedTitleMarginStart="48dp"
                 app:expandedTitleMarginEnd="64dp"
-                >
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
 
                 <ImageView
                     android:id="@+id/img_food_header"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
                     android:fitsSystemWindows="true"
-                    android:src="@drawable/bg_main"
-                    app:layout_collapseMode="parallax"
-                    />
-
-                <TextView
-                    android:id="@+id/tv_fun_fact"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="70dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="50dp"
-                    android:text=""
-                    android:textColor="@android:color/white"
-                    android:textSize="24sp"
-                    app:layout_collapseParallaxMultiplier="1.0" />
-
+                    android:scaleType="centerCrop"
+                    app:layout_collapseMode="parallax" />
 
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/main.toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
                     app:layout_collapseMode="pin"
-                    />
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -71,29 +54,224 @@
         </android.support.design.widget.AppBarLayout>
 
 
-
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:fillViewport="true"
-            >
-            <android.support.v4.view.ViewPager
-                android:id="@+id/view_pager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                android:orientation="vertical">
 
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/layout_protein"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/rounded_pro"
+                    app:layout_constraintEnd_toEndOf="@+id/layout_calories"
+                    app:layout_constraintStart_toStartOf="@+id/layout_calories"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_calories">
 
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/tab_layout"
+                    <TextView
+                        android:id="@+id/tv_pro_detail_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:text="Protein"
+                        android:textColor="@color/md_white_1000"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_pro_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="000"
+                        android:textColor="@color/md_white_1000"
+                        android:textSize="24sp"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_pro_detail_title"
+                        app:layout_constraintStart_toStartOf="@+id/tv_pro_detail_title"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_pro_detail_title" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/layout_fat"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/rounded_fat"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_calories">
+
+                    <TextView
+                        android:id="@+id/tv_fat_detail_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:text="Lemak"
+                        android:textColor="@color/md_white_1000"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_fat_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="000"
+                        android:textColor="@color/md_white_1000"
+                        android:textSize="24sp"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_fat_detail_title"
+                        app:layout_constraintStart_toStartOf="@+id/tv_fat_detail_title"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_fat_detail_title" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/layout_carbs"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/rounded_carbs"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_calories">
+
+                    <TextView
+                        android:id="@+id/tv_carb_detail_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:text="Karbohidrat"
+                        android:textColor="@color/md_white_1000"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_carb_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="000"
+                        android:textColor="@color/md_white_1000"
+                        android:textSize="24sp"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_carb_detail_title"
+                        app:layout_constraintStart_toStartOf="@+id/tv_carb_detail_title"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_carb_detail_title" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/layout_calories"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/rounded_cal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_cals_detail_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="22dp"
+                        android:text="Kalori"
+                        android:textColor="@color/md_white_1000"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_cals_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="000"
+                        android:textColor="@color/md_white_1000"
+                        android:textSize="24sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_cals_detail_title" />
+
+                    <TextView
+                        android:id="@+id/tv_cals_detail2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:text="kal"
+                        android:textColor="@color/md_white_1000"
+                        android:textSize="24sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_cals_detail"
+                        app:layout_constraintStart_toEndOf="@+id/tv_cals_detail" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:text="Fun Fact"
+                    android:textColor="@color/md_black_1000"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout_protein" />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/smf_green"
-                    app:tabIndicatorColor="@android:color/white"
-                    app:tabSelectedTextColor="@android:color/white"
-                    app:tabTextColor="@android:color/black" />
-            </android.support.v4.view.ViewPager>
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView15">
+
+                    <TextView
+                        android:id="@+id/tv_fun_fact"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lorem" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/bt_makan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/rounded_button_makan"
+                    android:text="Makan!"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+
+            </android.support.constraint.ConstraintLayout>
+            <!--<android.support.v4.view.ViewPager-->
+            <!--android:id="@+id/view_pager"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--app:layout_behavior="@string/appbar_scrolling_view_behavior">-->
+
+
+            <!--<android.support.design.widget.TabLayout-->
+            <!--android:id="@+id/tab_layout"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--app:tabIndicatorColor="@android:color/white"-->
+            <!--app:tabSelectedTextColor="@android:color/white"-->
+            <!--app:tabTextColor="@android:color/black" />-->
+            <!--</android.support.v4.view.ViewPager>-->
         </android.support.v4.widget.NestedScrollView>
 
     </android.support.design.widget.CoordinatorLayout>
