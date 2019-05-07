@@ -14,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -41,6 +42,7 @@ class HomeFragment : Fragment(), homeHistoryListener {
 
     private lateinit var camHelper: CameraHelper
     private val db = FirebaseDatabase.getInstance()
+    private val auth = FirebaseAuth.getInstance()
     private var list_item = ArrayList<Food>()
     private lateinit var formattedDate: String
     private lateinit var adapter: HomeHistoryAdapter
@@ -76,14 +78,14 @@ class HomeFragment : Fragment(), homeHistoryListener {
 
 
         initData()
-        getUserData()
+//        getUserData()
 
         // Inflate the layout for this fragment
         return view
     }
 
     fun initData(){
-        db.getReference("users").child("001").child("daily").addListenerForSingleValueEvent(object: ValueEventListener{
+        db.getReference("users").child(auth.currentUser!!.uid).child("daily").addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
@@ -91,18 +93,20 @@ class HomeFragment : Fragment(), homeHistoryListener {
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.child(formattedDate).value == null){
                     //tv_cal_consumed?.text = p1.child(formattedDate).value.toString()
-                    db.getReference("users").child("001").child("daily").child(formattedDate)
+                    db.getReference("users").child(auth.currentUser!!.uid).child("daily").child(formattedDate)
                             .setValue(0)
 //                        tv_cal_consumed?.text = p1.child(formattedDate).value.toString()
 
                 }
             }
         })
+
+        getUserData()
     }
 
     fun getUserData(){
 
-        db.getReference("users").child("001").addValueEventListener(object: ValueEventListener {
+        db.getReference("users").child(auth.currentUser!!.uid).addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
@@ -120,7 +124,7 @@ class HomeFragment : Fragment(), homeHistoryListener {
                             cal_consumed = p1.child(formattedDate).value.toString().toFloat()
                         }
                         if (p1.key == "kebutuhanKalori"){
-                            tv_cal_need?.text = "/ "+p1.value.toString()+" kal"
+                            tv_cal_need?.text = "/ "+String.format("%.0f", p1.value)+" kal"
                             cal_need = p1.value.toString().toFloat()
                         }
                         if (p1.key == "history"){
@@ -183,22 +187,12 @@ class HomeFragment : Fragment(), homeHistoryListener {
 
             Log.d("nasgor", result.toString())
 
-            var productName = result.images[0].classifiers[0].classes[0].className
-            var imgSrc = "";
-//            if (productName.equals("Apel", ignoreCase = true)) {
-//                imgSrc = "https://doktersehat.com/wp-content/uploads/2014/05/apel.jpg"
-//            } else if (productName.equals("Kol", ignoreCase = true)) {
-//                imgSrc = "https://blue.kumparan.com/kumpar/image/upload/fl_progressive,fl_lossy,c_fill,q_auto:best,w_640/v1521360707/raxkgzgrt44iiebd0krw.jpg"
-//            }
-
 
             if (result.images[0].classifiers[0].classes[0].className != null) {
                 activity!!.runOnUiThread { stopLoadingIndicator() }
                 val i = Intent(activity, FoodFact::class.java)
                 i.putExtra("productName", result.images[0].classifiers[0].classes[0].className)
-                i.putExtra("imgSrc", imgSrc);
                 startActivity(i)
-                //                    getActivity().finish();
             } else {
                 Toast.makeText(activity, "Mohon maaf makanan belum dikenali", Toast.LENGTH_SHORT).show()
             }

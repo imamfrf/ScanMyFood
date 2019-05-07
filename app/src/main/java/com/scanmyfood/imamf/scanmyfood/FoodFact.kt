@@ -13,6 +13,7 @@ import android.widget.ImageView
 
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -27,6 +28,7 @@ import java.util.*
 class FoodFact : AppCompatActivity() {
     private var img_header: ImageView? = null
     private var db = FirebaseDatabase.getInstance()
+    private var auth = FirebaseAuth.getInstance()
     private lateinit var formattedDate: String
 
 
@@ -46,11 +48,11 @@ class FoodFact : AppCompatActivity() {
             var cal = 0.0f
             override fun onClick(v: View) {
                 addHistory()
-                db.getReference("users").child("001").child("daily").child(formattedDate).addListenerForSingleValueEvent(object : ValueEventListener {
+                db.getReference("users").child(auth.currentUser!!.uid).child("daily").child(formattedDate).addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         cal = java.lang.Float.valueOf(dataSnapshot.value!!.toString())
                         val cal2 = cal + java.lang.Float.valueOf(tv_cals_detail.text.toString())
-                        db.getReference("users").child("001").child("daily").child(formattedDate).setValue(cal2)
+                        db.getReference("users").child(auth.currentUser!!.uid).child("daily").child(formattedDate).setValue(cal2)
                                 .addOnSuccessListener {
                                     Snackbar.make(findViewById(android.R.id.content), "Kalori berhasil ditambahkan", Snackbar.LENGTH_SHORT).show()
 
@@ -94,7 +96,7 @@ class FoodFact : AppCompatActivity() {
     }
 
     fun addHistory(){
-        db.getReference("users").child("001").child("history")
+        db.getReference("users").child(auth.currentUser!!.uid).child("history")
                 .child(intent.getStringExtra("productName")).setValue("scanned")
     }
 

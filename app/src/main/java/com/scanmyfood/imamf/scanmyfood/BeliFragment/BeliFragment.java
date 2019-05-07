@@ -103,7 +103,7 @@ public class BeliFragment extends Fragment implements makananListener {
                     return;
                 }
                 for (final DataSnapshot childDataSnapshot : dataSnapshot.getChildren()) {
-                    mDatabaseReference.child("users").child("001").addValueEventListener(new ValueEventListener() {
+                    mDatabaseReference.child("users").child(mFirebaseAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if (Double.valueOf(childDataSnapshot.child("kaloriMakanan").getValue().toString())
