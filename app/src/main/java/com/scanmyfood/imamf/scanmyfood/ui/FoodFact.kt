@@ -1,4 +1,4 @@
-package com.scanmyfood.imamf.scanmyfood
+package com.scanmyfood.imamf.scanmyfood.ui
 
 import android.content.Context
 import android.content.Intent
@@ -7,18 +7,15 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.Snackbar
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 
-import com.bumptech.glide.Glide
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.scanmyfood.imamf.scanmyfood.Model.Food
+import com.scanmyfood.imamf.scanmyfood.R
 import com.scanmyfood.imamf.scanmyfood.api.DownloadWebPage
 import kotlinx.android.synthetic.main.activity_food_fact.*
 import java.text.SimpleDateFormat

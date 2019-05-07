@@ -17,22 +17,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".ui.RegisterActivity" />
+        <activity android:name=".ui.MainActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyByq-nuRyytaf5DCk5O8AXYcXpTPokFf28" />
 
-        <activity android:name=".DetailMakananActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".ui.DetailMakananActivity" />
+        <activity android:name=".ui.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FoodFact" />
+        <activity android:name=".ui.FoodFact" />
     </application>
 
 </manifest>

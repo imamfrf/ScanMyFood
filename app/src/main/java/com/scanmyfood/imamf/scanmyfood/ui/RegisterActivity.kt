@@ -1,4 +1,4 @@
-package com.scanmyfood.imamf.scanmyfood
+package com.scanmyfood.imamf.scanmyfood.ui
 
 import android.app.DatePickerDialog
 import android.content.Intent
@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.scanmyfood.imamf.scanmyfood.Model.User
+import com.scanmyfood.imamf.scanmyfood.R
 import com.scanmyfood.imamf.scanmyfood.extension.toast
 import com.scanmyfood.imamf.scanmyfood.util.Constant
 import com.scanmyfood.imamf.scanmyfood.util.Constant.DEFAULT.DEFAULT_NOT_SET

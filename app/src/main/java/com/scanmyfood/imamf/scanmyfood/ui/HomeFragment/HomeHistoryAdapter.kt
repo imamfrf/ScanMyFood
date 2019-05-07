@@ -1,4 +1,4 @@
-package com.scanmyfood.imamf.scanmyfood.HomeFragment
+package com.scanmyfood.imamf.scanmyfood.ui.HomeFragment
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater

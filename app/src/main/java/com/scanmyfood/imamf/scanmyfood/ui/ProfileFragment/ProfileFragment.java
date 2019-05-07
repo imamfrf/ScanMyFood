@@ -1,4 +1,4 @@
-package com.scanmyfood.imamf.scanmyfood;
+package com.scanmyfood.imamf.scanmyfood.ui.ProfileFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +14,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +29,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.scanmyfood.imamf.scanmyfood.Model.User;
+import com.scanmyfood.imamf.scanmyfood.R;
+import com.scanmyfood.imamf.scanmyfood.ui.LoginActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
