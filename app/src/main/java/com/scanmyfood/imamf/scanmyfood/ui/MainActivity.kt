@@ -1,12 +1,14 @@
-package com.scanmyfood.imamf.scanmyfood
+package com.scanmyfood.imamf.scanmyfood.ui
 
 import android.content.Intent
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.scanmyfood.imamf.scanmyfood.BeliFragment.BeliFragment
-import com.scanmyfood.imamf.scanmyfood.HomeFragment.HomeFragment
+import com.scanmyfood.imamf.scanmyfood.ui.RecommendationFragment.ReccomendationFragment
+import com.scanmyfood.imamf.scanmyfood.ui.HomeFragment.HomeFragment
+import com.scanmyfood.imamf.scanmyfood.ui.ProfileFragment.ProfileFragment
+import com.scanmyfood.imamf.scanmyfood.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -28,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 R.id.navigation_recommend -> {
-                    fragment = BeliFragment()
+                    fragment = ReccomendationFragment()
                     loadFragment(fragment)
                     //navigation.selectedItemId = R.id.navigation_recommend
                 }
@@ -61,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 //
 //            }
 //            R.id.navigation_recommend -> {
-//                fragment = BeliFragment()
+//                fragment = RecommendationFragment()
 //                loadFragment(fragment)
 //                //navigation.selectedItemId = R.id.navigation_recommend
 //            }

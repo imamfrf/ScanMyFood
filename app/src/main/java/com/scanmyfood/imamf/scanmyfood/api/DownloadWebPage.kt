@@ -3,7 +3,7 @@ package com.scanmyfood.imamf.scanmyfood.api
 import android.os.AsyncTask
 import android.util.Log
 import com.bumptech.glide.Glide
-import com.scanmyfood.imamf.scanmyfood.FoodFact
+import com.scanmyfood.imamf.scanmyfood.ui.FoodFact
 
 import com.scanmyfood.imamf.scanmyfood.Model.Food
 import kotlinx.android.synthetic.main.activity_food_fact.*

@@ -1,4 +1,4 @@
-package com.scanmyfood.imamf.scanmyfood.HomeFragment
+package com.scanmyfood.imamf.scanmyfood.ui.HomeFragment
 
 import android.app.Activity
 import android.content.Context
@@ -23,7 +23,7 @@ import com.ibm.watson.developer_cloud.android.library.camera.CameraHelper
 import com.ibm.watson.developer_cloud.service.security.IamOptions
 import com.ibm.watson.developer_cloud.visual_recognition.v3.VisualRecognition
 import com.ibm.watson.developer_cloud.visual_recognition.v3.model.ClassifyOptions
-import com.scanmyfood.imamf.scanmyfood.FoodFact
+import com.scanmyfood.imamf.scanmyfood.ui.FoodFact
 import com.scanmyfood.imamf.scanmyfood.Model.Food
 import com.scanmyfood.imamf.scanmyfood.R
 import kotlinx.android.synthetic.main.fragment_home.*

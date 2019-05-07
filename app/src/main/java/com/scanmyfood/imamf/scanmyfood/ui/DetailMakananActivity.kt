@@ -1,4 +1,4 @@
-package com.scanmyfood.imamf.scanmyfood
+package com.scanmyfood.imamf.scanmyfood.ui
 
 import android.location.Address
 import android.os.Bundle
@@ -20,6 +20,7 @@ import com.scanmyfood.imamf.scanmyfood.util.Constant.KEY.KEY_ID_MAKANAN
 import com.scanmyfood.imamf.scanmyfood.util.Constant.KEY.KEY_NAMA_MAKANAN
 import kotlinx.android.synthetic.main.activity_detail_makanan.*
 import android.location.Geocoder
+import com.scanmyfood.imamf.scanmyfood.R
 import java.util.*
 
 

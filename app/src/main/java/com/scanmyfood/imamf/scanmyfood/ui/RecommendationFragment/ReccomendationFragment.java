@@ -1,4 +1,4 @@
-package com.scanmyfood.imamf.scanmyfood.BeliFragment;
+package com.scanmyfood.imamf.scanmyfood.ui.RecommendationFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.scanmyfood.imamf.scanmyfood.DetailMakananActivity;
+import com.scanmyfood.imamf.scanmyfood.ui.DetailMakananActivity;
 import com.scanmyfood.imamf.scanmyfood.Model.List_Makanan;
 import com.scanmyfood.imamf.scanmyfood.R;
 import com.trackeat.imamf.trackeat.BeliFragment.makananAdapter;
@@ -39,7 +38,7 @@ import static com.scanmyfood.imamf.scanmyfood.util.Constant.KEY.KEY_NAMA_CATERIN
 import static com.scanmyfood.imamf.scanmyfood.util.Constant.KEY.KEY_NAMA_MAKANAN;
 
 
-public class BeliFragment extends Fragment implements makananListener {
+public class ReccomendationFragment extends Fragment implements makananListener {
 
     private ArrayList mMakanans;
 

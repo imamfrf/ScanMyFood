@@ -10,7 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.scanmyfood.imamf.scanmyfood.BeliFragment.makananListener
+import com.scanmyfood.imamf.scanmyfood.ui.RecommendationFragment.makananListener
 import com.scanmyfood.imamf.scanmyfood.Model.List_Makanan
 import com.scanmyfood.imamf.scanmyfood.R
 import com.scanmyfood.imamf.scanmyfood.util.Constant.DEFAULT.DEFAULT_NOT_SET

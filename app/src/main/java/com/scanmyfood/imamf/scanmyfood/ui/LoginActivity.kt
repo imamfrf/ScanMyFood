@@ -1,4 +1,4 @@
-package com.scanmyfood.imamf.scanmyfood
+package com.scanmyfood.imamf.scanmyfood.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,7 +13,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.scanmyfood.imamf.scanmyfood.Model.User
+import com.scanmyfood.imamf.scanmyfood.R
 import com.scanmyfood.imamf.scanmyfood.extension.toast
+import com.scanmyfood.imamf.scanmyfood.pattern.SingletonFirebase
 import com.scanmyfood.imamf.scanmyfood.util.Constant
 import com.scanmyfood.imamf.scanmyfood.util.PreferenceHelper
 import com.scanmyfood.imamf.scanmyfood.util.PreferenceHelper.set
@@ -21,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var mFirebaseAuth: FirebaseAuth
+    private var mFirebaseAuth = SingletonFirebase.mFirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
         val password = editTextPassword.text.toString().trim()
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             startLoadingIndicator()
-            mFirebaseAuth.signInWithEmailAndPassword(email, password)
+            SingletonFirebase.mFirebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         stopLoadingIndicator()
                         if (task.isSuccessful) {
