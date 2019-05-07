@@ -10,5 +10,17 @@
     <string name="deskripsi">Deskripsi</string>
     <string name="kalori">Kalori</string>
     <string name="namaKatering">Nama Katering</string>
+    <string name="email">Alamat Email</string>
+    <string name="password">Kata Sandi</string>
+    <string name="login">Login</string>
+    <string name="namaLengkap">Nama Lengkap</string>
+    <string name="tanggalLahir">Tanggal Lahir</string>
+    <string name="jenisKelamin">Jenis Kelamin</string>
+    <string name="lakilaki">Laki-Laki</string>
+    <string name="perempuan">Perempuan</string>
+    <string name="tinggiBadan">Tinggi Badan</string>
+    <string name="beratBadan">Berat Badan</string>
+    <string name="register">Register</string>
+    <string name="confirmPassword">Konfirmasi Kata Sandi</string>
 
 </resources>

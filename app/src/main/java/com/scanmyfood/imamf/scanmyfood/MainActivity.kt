@@ -32,6 +32,10 @@ class MainActivity : AppCompatActivity() {
                     loadFragment(fragment)
                     //navigation.selectedItemId = R.id.navigation_recommend
                 }
+                R.id.navigation_profile -> {
+                    fragment = ProfileFragment()
+                    loadFragment(fragment)
+                }
             }
             return@setOnNavigationItemSelectedListener true
         }

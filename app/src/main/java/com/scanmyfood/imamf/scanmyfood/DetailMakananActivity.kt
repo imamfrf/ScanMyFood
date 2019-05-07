@@ -1,5 +1,6 @@
 package com.scanmyfood.imamf.scanmyfood
 
+import android.location.Address
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
@@ -18,17 +19,23 @@ import com.scanmyfood.imamf.scanmyfood.util.Constant.DEFAULT.DEFAULT_NOT_SET
 import com.scanmyfood.imamf.scanmyfood.util.Constant.KEY.KEY_ID_MAKANAN
 import com.scanmyfood.imamf.scanmyfood.util.Constant.KEY.KEY_NAMA_MAKANAN
 import kotlinx.android.synthetic.main.activity_detail_makanan.*
+import android.location.Geocoder
+import java.util.*
+
 
 class DetailMakananActivity : AppCompatActivity() {
 
     private var mExtras: Bundle? = null
-    private var mEventId: String? = null
-    private var mEventName: String? = null
+    private var mFoodId: String? = null
+    private var mFoodName: String? = null
     private var mFirebaseAuth: FirebaseAuth? = null
     private var mFirebaseUser: FirebaseUser? = null
     private var mFirebaseDatabase: FirebaseDatabase? = null
     private var mDatabaseReference: DatabaseReference? = null
+
     private lateinit var mMap: GoogleMap
+    var geocoder: Geocoder? = null
+    var addresses: List<Address>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,13 +44,14 @@ class DetailMakananActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeButtonEnabled(true)
         mExtras = intent?.extras
-        mEventName = mExtras?.getString(KEY_NAMA_MAKANAN)
-        collapse_toolbar.title = mEventName
+        mFoodName = mExtras?.getString(KEY_NAMA_MAKANAN)
+        collapse_toolbar.title = mFoodName
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         setupFirebase()
-        mEventId = mExtras?.getString(KEY_ID_MAKANAN)
-        if (mEventId != null) {
-            fetchEvent(mEventId!!)
+        mFoodId = mExtras?.getString(KEY_ID_MAKANAN)
+        geocoder = Geocoder(this, Locale.getDefault())
+        if (mFoodId != null) {
+            fetchEvent(mFoodId!!)
             mapFragment.getMapAsync {
                 mMap = it
                 val lat = mExtras?.getDouble("lat")
@@ -51,6 +59,9 @@ class DetailMakananActivity : AppCompatActivity() {
                 val location = LatLng(lat!!, lng!!)
                 mMap.addMarker(MarkerOptions().position(location).title("Marker in Location"))
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15f))
+                addresses = geocoder!!.getFromLocation(lat, lng, 1)
+                val address = addresses?.get(0)?.getAddressLine(0)
+                textViewAlamatKatering.text = address
             }
         }
     }

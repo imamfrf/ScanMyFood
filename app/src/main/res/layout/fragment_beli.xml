@@ -7,7 +7,7 @@
     tools:context=".BeliFragment.BeliFragment">
 
     <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/frameLayout"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/gradient_background_selector"
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fillViewport="true"
-        android:layout_below="@+id/frameLayout">
+        android:layout_below="@+id/toolbar">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

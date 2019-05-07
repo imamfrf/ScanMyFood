@@ -1,4 +1,4 @@
-package com.trackeat.imamf.trackeat.util
+package com.scanmyfood.imamf.scanmyfood.util
 
 import android.content.Context
 import android.content.SharedPreferences
