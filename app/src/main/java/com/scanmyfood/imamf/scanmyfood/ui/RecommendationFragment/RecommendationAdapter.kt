@@ -1,4 +1,4 @@
-package com.trackeat.imamf.trackeat.BeliFragment
+package com.scanmyfood.imamf.scanmyfood.ui.RecommendationFragment
 
 import android.content.Context
 import android.support.v7.widget.CardView
@@ -10,13 +10,12 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import com.scanmyfood.imamf.scanmyfood.ui.RecommendationFragment.RecommendationListener
-import com.scanmyfood.imamf.scanmyfood.Model.List_Makanan
+import com.scanmyfood.imamf.scanmyfood.Model.CateringFood
 import com.scanmyfood.imamf.scanmyfood.R
 import com.scanmyfood.imamf.scanmyfood.util.Constant.DEFAULT.DEFAULT_NOT_SET
 
 class RecommendationAdapter(
-        val items: ArrayList<List_Makanan>, val listener: RecommendationListener, val mContext: Context
+        val items: ArrayList<CateringFood>, val listener: RecommendationListener, val mContext: Context
 ) : RecyclerView.Adapter<RecommendationAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context)

@@ -15,15 +15,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.ibm.watson.developer_cloud.android.library.camera.CameraHelper
 import com.ibm.watson.developer_cloud.service.security.IamOptions
 import com.ibm.watson.developer_cloud.visual_recognition.v3.VisualRecognition
 import com.ibm.watson.developer_cloud.visual_recognition.v3.model.ClassifyOptions
-import com.scanmyfood.imamf.scanmyfood.ui.FoodFact
 import com.scanmyfood.imamf.scanmyfood.Model.Food
 import com.scanmyfood.imamf.scanmyfood.R
 import com.scanmyfood.imamf.scanmyfood.pattern.SingletonFirebase
+import com.scanmyfood.imamf.scanmyfood.ui.FoodFact
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.json.JSONException
@@ -51,7 +54,6 @@ class HomeFragment : Fragment(), homeHistoryListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-       // val inflate = inflater.inflate(R.layout.fragment_home, null)
 
         val view: View = inflater!!.inflate(R.layout.fragment_home, null)
 
@@ -80,9 +82,7 @@ class HomeFragment : Fragment(), homeHistoryListener {
 
 
         initData()
-//        getUserData()
 
-        // Inflate the layout for this fragment
         return view
     }
 
@@ -97,7 +97,6 @@ class HomeFragment : Fragment(), homeHistoryListener {
                     //tv_cal_consumed?.text = p1.child(formattedDate).value.toString()
                     mFirebaseDatabase.getReference("users").child(auth.currentUser!!.uid).child("daily").child(formattedDate)
                             .setValue(0)
-//                        tv_cal_consumed?.text = p1.child(formattedDate).value.toString()
 
                 }
             }
@@ -135,10 +134,6 @@ class HomeFragment : Fragment(), homeHistoryListener {
                                 adapter.notifyDataSetChanged()
                             }
                         }
-
-
-
-
 
                 }
                 var percent = (cal_consumed / cal_need) * 100
@@ -238,6 +233,7 @@ class HomeFragment : Fragment(), homeHistoryListener {
     }
 
 
+    //web service
     inner class DownloadWebPage(foodName: String, home: HomeFragment) : AsyncTask<String, Void, String>() {
         private var foodName: String
         private var home: HomeFragment
@@ -290,7 +286,17 @@ class HomeFragment : Fragment(), homeHistoryListener {
             } catch (e: JSONException) {
                 e.printStackTrace()
             }
-            val food = Food(id, name, calorie, fat, carb, protein, imgSrc, funFact)
+            val food = Food.Builder()
+                    .setId(id)
+                    .setName(name)
+                    .setCalorie(calorie)
+                    .setFat(fat)
+                    .setCarb(carb)
+                    .setProtein(protein)
+                    .setImg(imgSrc)
+                    .setFunFact(funFact)
+                    .create()
+
             home.list_item.add(food)
             home.adapter = HomeHistoryAdapter(home.list_item, this@HomeFragment, this@HomeFragment)
             home.recV_home.adapter = home.adapter

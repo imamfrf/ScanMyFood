@@ -120,8 +120,18 @@ class RegisterActivity : AppCompatActivity() {
                 toast("Register berhasil")
                 val userId = mFirebaseAuth.currentUser!!.uid
                 val photoUrl = DEFAULT_NOT_SET
-                val newUser = User(userId, nama, email, tanggalLahir, jenisKelamin, tinggiBadan, beratBadan, kebutuhanKalori, usia, photoUrl)
-                // send user data to firebase database
+                val newUser = User.Builder()
+                        .setUserId(userId)
+                        .setEmail(email)
+                        .setNama(nama)
+                        .setTanggalLahir(tanggalLahir)
+                        .setTinggiBadan(tinggiBadan)
+                        .setBeratBadan(beratBadan)
+                        .setJenisKelamin(jenisKelamin)
+                        .setUsia(usia)
+                        .setKebutuhanKalori(kebutuhanKalori)
+                        .create()
+                        // send user data to firebase database
                 mDatabaseReference.child(userId).setValue(newUser).addOnCompleteListener {
                     stopLoadingIndicator()
                     sendEmailVerification()

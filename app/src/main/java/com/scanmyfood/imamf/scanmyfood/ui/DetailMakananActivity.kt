@@ -1,6 +1,10 @@
 package com.scanmyfood.imamf.scanmyfood.ui
 
+import android.content.Intent
+import android.content.Intent.ACTION_DIAL
 import android.location.Address
+import android.location.Geocoder
+import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
@@ -13,18 +17,14 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import com.scanmyfood.imamf.scanmyfood.Model.List_Makanan
-import com.scanmyfood.imamf.scanmyfood.util.Constant.CHILD.CHILD_MAKANAN
-import com.scanmyfood.imamf.scanmyfood.util.Constant.DEFAULT.DEFAULT_NOT_SET
-import kotlinx.android.synthetic.main.activity_detail_makanan.*
-import android.location.Geocoder
+import com.scanmyfood.imamf.scanmyfood.Model.CateringFood
 import com.scanmyfood.imamf.scanmyfood.R
 import com.scanmyfood.imamf.scanmyfood.pattern.SingletonFirebase
-import java.util.*
-import android.content.Intent.ACTION_CALL
-import android.content.Intent
-import android.net.Uri
+import com.scanmyfood.imamf.scanmyfood.util.Constant.CHILD.CHILD_MAKANAN
+import com.scanmyfood.imamf.scanmyfood.util.Constant.DEFAULT.DEFAULT_NOT_SET
 import com.scanmyfood.imamf.scanmyfood.util.Constant.KEY.*
+import kotlinx.android.synthetic.main.activity_detail_makanan.*
+import java.util.*
 
 
 class DetailMakananActivity : AppCompatActivity() {
@@ -73,7 +73,7 @@ class DetailMakananActivity : AppCompatActivity() {
             }
         }
         buttonPesan.setOnClickListener {
-            val intent = Intent(ACTION_CALL, Uri.parse("tel:" + mPhoneNumber))
+            val intent = Intent(ACTION_DIAL, Uri.parse("tel:" + mPhoneNumber))
             startActivity(intent)
         }
     }
@@ -101,18 +101,18 @@ class DetailMakananActivity : AppCompatActivity() {
             override fun onCancelled(p0: DatabaseError) {
             }
 
-            override fun onDataChange(p0: DataSnapshot) {
-                val makanan = p0.getValue(List_Makanan::class.java)
-                textViewEventName.text = makanan?.namaMakanan
-                textViewNamaKatering.text = makanan?.namaCatering
-                textViewTeleponKatering.text = makanan?.nomorHp
-                val firstPhotoUrl = makanan?.photo
-                if (firstPhotoUrl == DEFAULT_NOT_SET) {
-                    Glide.with(applicationContext).load(R.drawable.default_image_not_set).into(imageViewNamaMakanan)
-                } else {
-                    Glide.with(applicationContext).load(firstPhotoUrl).into(imageViewNamaMakanan)
-                }
-            }
-        })
+                    override fun onDataChange(p0: DataSnapshot) {
+                        val makanan = p0.getValue(CateringFood::class.java)
+                        textViewEventName.text = makanan?.namaMakanan
+                        textViewNamaKatering.text = makanan?.namaCatering
+                        textViewTeleponKatering.text = makanan?.nomorHp
+                        val firstPhotoUrl = makanan?.photo
+                        if (firstPhotoUrl == DEFAULT_NOT_SET) {
+                            Glide.with(applicationContext).load(R.drawable.default_image_not_set).into(imageViewNamaMakanan)
+                        } else {
+                           Glide.with(applicationContext).load(firstPhotoUrl).into(imageViewNamaMakanan)
+                        }
+                    }
+                })
     }
 }

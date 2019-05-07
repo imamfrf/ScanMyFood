@@ -22,11 +22,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.scanmyfood.imamf.scanmyfood.ui.DetailMakananActivity;
-import com.scanmyfood.imamf.scanmyfood.Model.List_Makanan;
+import com.scanmyfood.imamf.scanmyfood.Model.CateringFood;
 import com.scanmyfood.imamf.scanmyfood.R;
-import com.trackeat.imamf.trackeat.BeliFragment.RecommendationAdapter;
-
+import com.scanmyfood.imamf.scanmyfood.ui.DetailMakananActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,7 +77,7 @@ public class RecommendationFragment extends Fragment implements RecommendationLi
         setupFirebase();
         mStatusTextView.setVisibility(View.GONE);
 
-        mMakanans = new ArrayList<List_Makanan>();
+        mMakanans = new ArrayList<CateringFood>();
 
         setupRecyclerView();
 
@@ -111,7 +109,7 @@ public class RecommendationFragment extends Fragment implements RecommendationLi
                                         <= (Double.valueOf(dataSnapshot.child("kebutuhanKalori").getValue().toString())
                                         - Double.valueOf(dataSnapshot.child("daily")
                                         .child(formattedDate).getValue().toString()))){
-                                    List_Makanan itemMakanan = childDataSnapshot.getValue(List_Makanan.class);
+                                    CateringFood itemMakanan = childDataSnapshot.getValue(CateringFood.class);
                                     mMakanans.add(itemMakanan);
                                     mAdapter.notifyDataSetChanged();
                                     updateUI();
