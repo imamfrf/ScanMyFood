@@ -16,12 +16,15 @@ import com.google.firebase.database.*
 import com.scanmyfood.imamf.scanmyfood.Model.List_Makanan
 import com.scanmyfood.imamf.scanmyfood.util.Constant.CHILD.CHILD_MAKANAN
 import com.scanmyfood.imamf.scanmyfood.util.Constant.DEFAULT.DEFAULT_NOT_SET
-import com.scanmyfood.imamf.scanmyfood.util.Constant.KEY.KEY_ID_MAKANAN
-import com.scanmyfood.imamf.scanmyfood.util.Constant.KEY.KEY_NAMA_MAKANAN
 import kotlinx.android.synthetic.main.activity_detail_makanan.*
 import android.location.Geocoder
 import com.scanmyfood.imamf.scanmyfood.R
+import com.scanmyfood.imamf.scanmyfood.pattern.SingletonFirebase
 import java.util.*
+import android.content.Intent.ACTION_CALL
+import android.content.Intent
+import android.net.Uri
+import com.scanmyfood.imamf.scanmyfood.util.Constant.KEY.*
 
 
 class DetailMakananActivity : AppCompatActivity() {
@@ -29,10 +32,13 @@ class DetailMakananActivity : AppCompatActivity() {
     private var mExtras: Bundle? = null
     private var mFoodId: String? = null
     private var mFoodName: String? = null
-    private var mFirebaseAuth: FirebaseAuth? = null
-    private var mFirebaseUser: FirebaseUser? = null
-    private var mFirebaseDatabase: FirebaseDatabase? = null
-    private var mDatabaseReference: DatabaseReference? = null
+    private var mPhoneNumber: String? = null
+
+    private lateinit var mSingletonFirebase: SingletonFirebase
+    private lateinit var mFirebaseAuth: FirebaseAuth
+    private lateinit var mFirebaseUser: FirebaseUser
+    private lateinit var mFirebaseDatabase: FirebaseDatabase
+    private lateinit var mDatabaseReference: DatabaseReference
 
     private lateinit var mMap: GoogleMap
     var geocoder: Geocoder? = null
@@ -46,6 +52,7 @@ class DetailMakananActivity : AppCompatActivity() {
         supportActionBar?.setHomeButtonEnabled(true)
         mExtras = intent?.extras
         mFoodName = mExtras?.getString(KEY_NAMA_MAKANAN)
+        mPhoneNumber = mExtras?.getString(KEY_PHONE_NUMBER)
         collapse_toolbar.title = mFoodName
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         setupFirebase()
@@ -65,6 +72,10 @@ class DetailMakananActivity : AppCompatActivity() {
                 textViewAlamatKatering.text = address
             }
         }
+        buttonPesan.setOnClickListener {
+            val intent = Intent(ACTION_CALL, Uri.parse("tel:" + mPhoneNumber))
+            startActivity(intent)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -78,43 +89,30 @@ class DetailMakananActivity : AppCompatActivity() {
     }
 
     private fun setupFirebase() {
-        mFirebaseAuth = FirebaseAuth.getInstance()
-        mFirebaseUser = mFirebaseAuth?.currentUser
-        mFirebaseDatabase = FirebaseDatabase.getInstance()
-        mDatabaseReference = mFirebaseDatabase?.reference
+        mSingletonFirebase = SingletonFirebase.getInstance()
+        mFirebaseAuth = mSingletonFirebase.firebaseAuth
+        mFirebaseUser = mFirebaseAuth.currentUser!!
+        mFirebaseDatabase = mSingletonFirebase.firebaseDatabase
+        mDatabaseReference = mFirebaseDatabase.reference
     }
 
     private fun fetchEvent(id: String) {
-        mDatabaseReference?.child(CHILD_MAKANAN)?.child(id)
-                ?.addValueEventListener(object : ValueEventListener {
-                    override fun onCancelled(p0: DatabaseError) {
-                    }
+        mDatabaseReference.child(CHILD_MAKANAN).child(id).addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+            }
 
-                    override fun onDataChange(p0: DataSnapshot) {
-                        val makanan = p0.getValue(List_Makanan::class.java)
-                        textViewEventName.text = makanan?.namaMakanan
-                        textViewNamaKatering.text = makanan?.namaCatering
-                        textViewTeleponKatering.text = makanan?.nomorHp
-                        val firstPhotoUrl = makanan?.photo
-                        if (firstPhotoUrl == DEFAULT_NOT_SET) {
-                            Glide.with(applicationContext).load(R.drawable.default_image_not_set).into(imageViewNamaMakanan)
-                        } else {
-                           Glide.with(applicationContext).load(firstPhotoUrl).into(imageViewNamaMakanan)
-                        }
-                    }
-                })
+            override fun onDataChange(p0: DataSnapshot) {
+                val makanan = p0.getValue(List_Makanan::class.java)
+                textViewEventName.text = makanan?.namaMakanan
+                textViewNamaKatering.text = makanan?.namaCatering
+                textViewTeleponKatering.text = makanan?.nomorHp
+                val firstPhotoUrl = makanan?.photo
+                if (firstPhotoUrl == DEFAULT_NOT_SET) {
+                    Glide.with(applicationContext).load(R.drawable.default_image_not_set).into(imageViewNamaMakanan)
+                } else {
+                    Glide.with(applicationContext).load(firstPhotoUrl).into(imageViewNamaMakanan)
+                }
+            }
+        })
     }
-
-//    private fun fetchOwnerEvent(id: String) {
-//        mDatabaseReference?.child(CHILD_USERS)?.child(id)?.addValueEventListener(object : ValueEventListener {
-//            override fun onCancelled(p0: DatabaseError) {
-//            }
-//
-//            override fun onDataChange(p0: DataSnapshot) {
-//                val user = p0.getValue(User::class.java)
-//                textViewEventOwner.text = user?.nama
-//            }
-//
-//        })
-//    }
 }

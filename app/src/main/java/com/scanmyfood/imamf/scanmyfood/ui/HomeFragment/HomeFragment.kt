@@ -15,10 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.ibm.watson.developer_cloud.android.library.camera.CameraHelper
 import com.ibm.watson.developer_cloud.service.security.IamOptions
 import com.ibm.watson.developer_cloud.visual_recognition.v3.VisualRecognition
@@ -26,6 +23,7 @@ import com.ibm.watson.developer_cloud.visual_recognition.v3.model.ClassifyOption
 import com.scanmyfood.imamf.scanmyfood.ui.FoodFact
 import com.scanmyfood.imamf.scanmyfood.Model.Food
 import com.scanmyfood.imamf.scanmyfood.R
+import com.scanmyfood.imamf.scanmyfood.pattern.SingletonFirebase
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import org.json.JSONException
@@ -41,7 +39,8 @@ import kotlin.collections.ArrayList
 class HomeFragment : Fragment(), homeHistoryListener {
 
     private lateinit var camHelper: CameraHelper
-    private val db = FirebaseDatabase.getInstance()
+    private lateinit var mSingletonFirebase: SingletonFirebase
+    private lateinit var mFirebaseDatabase: FirebaseDatabase
     private val auth = FirebaseAuth.getInstance()
     private var list_item = ArrayList<Food>()
     private lateinit var formattedDate: String
@@ -55,6 +54,9 @@ class HomeFragment : Fragment(), homeHistoryListener {
        // val inflate = inflater.inflate(R.layout.fragment_home, null)
 
         val view: View = inflater!!.inflate(R.layout.fragment_home, null)
+
+        mSingletonFirebase = SingletonFirebase.getInstance()
+        mFirebaseDatabase = mSingletonFirebase.firebaseDatabase
 
         //today's date
         val c = Calendar.getInstance().time
@@ -85,7 +87,7 @@ class HomeFragment : Fragment(), homeHistoryListener {
     }
 
     fun initData(){
-        db.getReference("users").child(auth.currentUser!!.uid).child("daily").addListenerForSingleValueEvent(object: ValueEventListener{
+        mFirebaseDatabase.getReference("users").child(auth.currentUser!!.uid).child("daily").addListenerForSingleValueEvent(object: ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
@@ -93,7 +95,7 @@ class HomeFragment : Fragment(), homeHistoryListener {
             override fun onDataChange(p0: DataSnapshot) {
                 if (p0.child(formattedDate).value == null){
                     //tv_cal_consumed?.text = p1.child(formattedDate).value.toString()
-                    db.getReference("users").child(auth.currentUser!!.uid).child("daily").child(formattedDate)
+                    mFirebaseDatabase.getReference("users").child(auth.currentUser!!.uid).child("daily").child(formattedDate)
                             .setValue(0)
 //                        tv_cal_consumed?.text = p1.child(formattedDate).value.toString()
 
@@ -106,7 +108,7 @@ class HomeFragment : Fragment(), homeHistoryListener {
 
     fun getUserData(){
 
-        db.getReference("users").child(auth.currentUser!!.uid).addListenerForSingleValueEvent(object: ValueEventListener {
+        mFirebaseDatabase.getReference("users").child(auth.currentUser!!.uid).addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }

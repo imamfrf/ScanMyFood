@@ -17,21 +17,28 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.scanmyfood.imamf.scanmyfood.R
 import com.scanmyfood.imamf.scanmyfood.api.DownloadWebPage
+import com.scanmyfood.imamf.scanmyfood.pattern.SingletonFirebase
 import kotlinx.android.synthetic.main.activity_food_fact.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 
 class FoodFact : AppCompatActivity() {
+
     private var img_header: ImageView? = null
-    private var db = FirebaseDatabase.getInstance()
-    private var auth = FirebaseAuth.getInstance()
+    private lateinit var mSingletonFirebase: SingletonFirebase
+    private lateinit var mFirebaseDatabase: FirebaseDatabase
+    private lateinit var mFirebaseAuth: FirebaseAuth
     private lateinit var formattedDate: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_food_fact)
+
+        mSingletonFirebase = SingletonFirebase.getInstance()
+        mFirebaseAuth = mSingletonFirebase.firebaseAuth
+        mFirebaseDatabase = mSingletonFirebase.firebaseDatabase
 
         //today's date
         val c = Calendar.getInstance().time
@@ -45,11 +52,11 @@ class FoodFact : AppCompatActivity() {
             var cal = 0.0f
             override fun onClick(v: View) {
                 addHistory()
-                db.getReference("users").child(auth.currentUser!!.uid).child("daily").child(formattedDate).addListenerForSingleValueEvent(object : ValueEventListener {
+                mFirebaseDatabase.getReference("users").child(mFirebaseAuth.currentUser!!.uid).child("daily").child(formattedDate).addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         cal = java.lang.Float.valueOf(dataSnapshot.value!!.toString())
                         val cal2 = cal + java.lang.Float.valueOf(tv_cals_detail.text.toString())
-                        db.getReference("users").child(auth.currentUser!!.uid).child("daily").child(formattedDate).setValue(cal2)
+                        mFirebaseDatabase.getReference("users").child(mFirebaseAuth.currentUser!!.uid).child("daily").child(formattedDate).setValue(cal2)
                                 .addOnSuccessListener {
                                     Snackbar.make(findViewById(android.R.id.content), "Kalori berhasil ditambahkan", Snackbar.LENGTH_SHORT).show()
 
@@ -93,7 +100,7 @@ class FoodFact : AppCompatActivity() {
     }
 
     fun addHistory(){
-        db.getReference("users").child(auth.currentUser!!.uid).child("history")
+        mFirebaseDatabase.getReference("users").child(mFirebaseAuth.currentUser!!.uid).child("history")
                 .child(intent.getStringExtra("productName")).setValue("scanned")
     }
 

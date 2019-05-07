@@ -5,15 +5,17 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SingletonFirebase {
 
-    public static FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
-    public static FirebaseAuth mFirebaseAuth = FirebaseAuth.getInstance();
-
     private static final SingletonFirebase ourInstance = new SingletonFirebase();
+
+    public FirebaseDatabase firebaseDatabase;
+    public FirebaseAuth firebaseAuth;
 
     public static SingletonFirebase getInstance() {
         return ourInstance;
     }
 
     private SingletonFirebase() {
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
     }
 }

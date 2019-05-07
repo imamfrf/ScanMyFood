@@ -1,6 +1,7 @@
 package com.scanmyfood.imamf.scanmyfood.ui.RecommendationFragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.scanmyfood.imamf.scanmyfood.ui.DetailMakananActivity;
 import com.scanmyfood.imamf.scanmyfood.Model.List_Makanan;
 import com.scanmyfood.imamf.scanmyfood.R;
-import com.trackeat.imamf.trackeat.BeliFragment.makananAdapter;
+import com.trackeat.imamf.trackeat.BeliFragment.RecommendationAdapter;
 
 
 import java.text.SimpleDateFormat;
@@ -36,13 +37,14 @@ import static com.scanmyfood.imamf.scanmyfood.util.Constant.CHILD.CHILD_MAKANAN;
 import static com.scanmyfood.imamf.scanmyfood.util.Constant.KEY.KEY_ID_MAKANAN;
 import static com.scanmyfood.imamf.scanmyfood.util.Constant.KEY.KEY_NAMA_CATERING;
 import static com.scanmyfood.imamf.scanmyfood.util.Constant.KEY.KEY_NAMA_MAKANAN;
+import static com.scanmyfood.imamf.scanmyfood.util.Constant.KEY.KEY_PHONE_NUMBER;
 
 
-public class ReccomendationFragment extends Fragment implements makananListener {
+public class RecommendationFragment extends Fragment implements RecommendationListener {
 
     private ArrayList mMakanans;
 
-    private makananAdapter mAdapter;
+    private RecommendationAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private ProgressBar mProgressBar;
     private TextView mStatusTextView;
@@ -151,25 +153,27 @@ public class ReccomendationFragment extends Fragment implements makananListener 
 
     private void setupRecyclerView() {
         mRecyclerView.setLayoutManager(getReverseLinearLayoutManager());
-        mAdapter = new makananAdapter(mMakanans, this, getContext());
+        mAdapter = new RecommendationAdapter(mMakanans, this, getContext());
         mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
-    public void onItemClick(String id, String nama, String catering, double lat, double lng) {
-        navigateToDetailMakananActivity(id, nama, catering, lat, lng);
+    public void onItemClick(String id, String nama, String catering, double lat, double lng, String phoneNumber) {
+        navigateToDetailMakananActivity(id, nama, catering, lat, lng, phoneNumber);
     }
 
     @Override
-    public void onBuyClick(String id) {
-
+    public void onBuyClick(String id, String phoneNumber) {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
+        startActivity(intent);
     }
 
-    public void navigateToDetailMakananActivity(String id, String nama, String catering, double lat, double lng) {
+    public void navigateToDetailMakananActivity(String id, String nama, String catering, double lat, double lng, String phoneNumber) {
         Intent intent = new Intent(getContext(), DetailMakananActivity.class);
         intent.putExtra(KEY_ID_MAKANAN, id);
         intent.putExtra(KEY_NAMA_MAKANAN, nama);
         intent.putExtra(KEY_NAMA_CATERING, catering);
+        intent.putExtra(KEY_PHONE_NUMBER, phoneNumber);
         intent.putExtra("lat", lat);
         intent.putExtra("lng", lng);
         startActivity(intent);

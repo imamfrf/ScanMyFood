@@ -30,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.scanmyfood.imamf.scanmyfood.Model.User;
 import com.scanmyfood.imamf.scanmyfood.R;
+import com.scanmyfood.imamf.scanmyfood.pattern.SingletonFirebase;
 import com.scanmyfood.imamf.scanmyfood.ui.LoginActivity;
 
 import java.util.ArrayList;
@@ -47,8 +48,11 @@ public class ProfileFragment extends Fragment {
     private TextView mTextViewUsia;
     private TextView tv_avg_cal;
 
+    private SingletonFirebase mSingletonFirebase;
+    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
-    private FirebaseAuth auth;
+    private FirebaseAuth mFirebaseAuth;
+
     private String mUserId;
     private HashMap<String, String> weekly;
     private ArrayList<String> arr = new ArrayList<>();
@@ -77,9 +81,11 @@ public class ProfileFragment extends Fragment {
         mTextViewUsia = view.findViewById(R.id.textViewUsia);
         tv_avg_cal = view.findViewById(R.id.tv_avg_cal);
 
-        auth = FirebaseAuth.getInstance();
+        mSingletonFirebase = SingletonFirebase.getInstance();
+        mFirebaseAuth = mSingletonFirebase.firebaseAuth;
+        mFirebaseDatabase = mSingletonFirebase.firebaseDatabase;
+        mDatabaseReference = mFirebaseDatabase.getReference().child(CHILD_USERS);
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child(CHILD_USERS);
         mUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         mDatabaseReference.child(mUserId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -219,7 +225,7 @@ public class ProfileFragment extends Fragment {
         xAxis.add("Sab");
         return xAxis;
     }
-//        db.getReference("users").child(auth.getUid()).child("daily").addValueEventListener(new ValueEventListener() {
+//        db.getReference("users").child(mFirebaseAuth.getUid()).child("daily").addValueEventListener(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 //                int i = 0;
@@ -247,7 +253,7 @@ public class ProfileFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_logout:
-                auth.signOut();
+                mFirebaseAuth.signOut();
                 Intent i = new Intent(getActivity(), LoginActivity.class);
                 startActivity(i);
                 getActivity().finish();

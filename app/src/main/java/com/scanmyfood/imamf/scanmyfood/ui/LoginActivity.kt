@@ -23,12 +23,16 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
-    private var mFirebaseAuth = SingletonFirebase.mFirebaseAuth
+    private lateinit var mSingletonFirebase: SingletonFirebase
+    private lateinit var mFirebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        mFirebaseAuth = FirebaseAuth.getInstance()
+
+        mSingletonFirebase = SingletonFirebase.getInstance()
+        mFirebaseAuth = mSingletonFirebase.firebaseAuth
+
         viewDimScreen.visibility = View.GONE
 
         buttonLogin.setOnClickListener {
@@ -47,7 +51,7 @@ class LoginActivity : AppCompatActivity() {
         val password = editTextPassword.text.toString().trim()
         if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
             startLoadingIndicator()
-            SingletonFirebase.mFirebaseAuth.signInWithEmailAndPassword(email, password)
+            mFirebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
                         stopLoadingIndicator()
                         if (task.isSuccessful) {

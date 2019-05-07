@@ -5,7 +5,7 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.scanmyfood.imamf.scanmyfood.ui.RecommendationFragment.ReccomendationFragment
+import com.scanmyfood.imamf.scanmyfood.ui.RecommendationFragment.RecommendationFragment
 import com.scanmyfood.imamf.scanmyfood.ui.HomeFragment.HomeFragment
 import com.scanmyfood.imamf.scanmyfood.ui.ProfileFragment.ProfileFragment
 import com.scanmyfood.imamf.scanmyfood.R
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
                 R.id.navigation_recommend -> {
-                    fragment = ReccomendationFragment()
+                    fragment = RecommendationFragment()
                     loadFragment(fragment)
                     //navigation.selectedItemId = R.id.navigation_recommend
                 }

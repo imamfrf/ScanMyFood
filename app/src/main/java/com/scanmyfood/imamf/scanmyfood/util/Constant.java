@@ -28,6 +28,8 @@ public interface Constant {
 
         String KEY_NAMA_MAKANAN = "KEY_NAMA_MAKANAN";
 
+        String KEY_PHONE_NUMBER = "KEY_PHONE_NUMBER";
+
     }
 
 }

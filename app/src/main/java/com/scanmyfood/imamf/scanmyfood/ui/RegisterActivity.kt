@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.scanmyfood.imamf.scanmyfood.Model.User
 import com.scanmyfood.imamf.scanmyfood.R
 import com.scanmyfood.imamf.scanmyfood.extension.toast
+import com.scanmyfood.imamf.scanmyfood.pattern.SingletonFirebase
 import com.scanmyfood.imamf.scanmyfood.util.Constant
 import com.scanmyfood.imamf.scanmyfood.util.Constant.DEFAULT.DEFAULT_NOT_SET
 import kotlinx.android.synthetic.main.activity_register.*
@@ -27,16 +28,21 @@ import java.util.*
 
 class RegisterActivity : AppCompatActivity() {
 
+    private lateinit var mSingletonFirebase: SingletonFirebase
     private lateinit var mFirebaseAuth: FirebaseAuth
+    private lateinit var mFirebaseDatabase: FirebaseDatabase
     private lateinit var mDatabaseReference: DatabaseReference
+
     var cal = Calendar.getInstance()
-    var et_tglLhr: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
-        mDatabaseReference = FirebaseDatabase.getInstance().reference.child(Constant.CHILD.CHILD_USERS)
-        mFirebaseAuth = FirebaseAuth.getInstance()
+
+        mSingletonFirebase = SingletonFirebase.getInstance()
+        mFirebaseAuth = mSingletonFirebase.firebaseAuth
+        mFirebaseDatabase = mSingletonFirebase.firebaseDatabase
+        mDatabaseReference = mFirebaseDatabase.reference.child(Constant.CHILD.CHILD_USERS)
 
         buttonRegister.setOnClickListener {
             validateInput()
@@ -125,8 +131,8 @@ class RegisterActivity : AppCompatActivity() {
                 stopLoadingIndicator()
                 val errorCode = (task.exception as FirebaseAuthException).errorCode
                 when (errorCode) {
-//                    "ERROR_WEAK_PASSWORD" ->
-//                        toast("Password harus memiliki minimal 6 karakter")
+                    "ERROR_WEAK_PASSWORD" ->
+                        toast("Kata sandi minimal 6 karakter")
                     "ERROR_EMAIL_ALREADY_IN_USE" ->
                         toast("Alamat email sudah digunakan")
                     else ->
