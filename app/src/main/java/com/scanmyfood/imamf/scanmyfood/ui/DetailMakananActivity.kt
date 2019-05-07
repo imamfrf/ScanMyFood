@@ -13,7 +13,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import com.scanmyfood.imamf.scanmyfood.Model.List_Makanan
+import com.scanmyfood.imamf.scanmyfood.Model.CateringFood
 import com.scanmyfood.imamf.scanmyfood.util.Constant.CHILD.CHILD_MAKANAN
 import com.scanmyfood.imamf.scanmyfood.util.Constant.DEFAULT.DEFAULT_NOT_SET
 import com.scanmyfood.imamf.scanmyfood.util.Constant.KEY.KEY_ID_MAKANAN
@@ -91,7 +91,7 @@ class DetailMakananActivity : AppCompatActivity() {
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
-                        val makanan = p0.getValue(List_Makanan::class.java)
+                        val makanan = p0.getValue(CateringFood::class.java)
                         textViewEventName.text = makanan?.namaMakanan
                         textViewNamaKatering.text = makanan?.namaCatering
                         textViewTeleponKatering.text = makanan?.nomorHp

@@ -11,12 +11,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.scanmyfood.imamf.scanmyfood.ui.RecommendationFragment.makananListener
-import com.scanmyfood.imamf.scanmyfood.Model.List_Makanan
+import com.scanmyfood.imamf.scanmyfood.Model.CateringFood
 import com.scanmyfood.imamf.scanmyfood.R
 import com.scanmyfood.imamf.scanmyfood.util.Constant.DEFAULT.DEFAULT_NOT_SET
 
 class makananAdapter(
-        val items: ArrayList<List_Makanan>, val listener: makananListener, val mContext: Context
+        val items: ArrayList<CateringFood>, val listener: makananListener, val mContext: Context
 ) : RecyclerView.Adapter<makananAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView = LayoutInflater.from(parent.context)

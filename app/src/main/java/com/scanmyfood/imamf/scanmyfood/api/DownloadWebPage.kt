@@ -3,9 +3,9 @@ package com.scanmyfood.imamf.scanmyfood.api
 import android.os.AsyncTask
 import android.util.Log
 import com.bumptech.glide.Glide
+import com.scanmyfood.imamf.scanmyfood.Model.Food
 import com.scanmyfood.imamf.scanmyfood.ui.FoodFact
 
-import com.scanmyfood.imamf.scanmyfood.Model.Food
 import kotlinx.android.synthetic.main.activity_food_fact.*
 
 import org.json.JSONException
@@ -78,7 +78,16 @@ class DownloadWebPage(activity: FoodFact, foodName: String) : AsyncTask<String, 
         }
 
         if (activity != null) {
-            val food = Food(id, name, calorie, fat, carb, protein, imgSrc, funFact)
+            val food = Food.Builder()
+                    .setId(id)
+                    .setName(name)
+                    .setCalorie(calorie)
+                    .setFat(fat)
+                    .setCarb(carb)
+                    .setProtein(protein)
+                    .setImg(imgSrc)
+                    .setFunFact(funFact)
+                    .create()
 
             activity.setSupportActionBar(activity.main_toolbar)
             activity.supportActionBar!!.setDisplayShowTitleEnabled(true)

@@ -1,14 +1,14 @@
 package com.scanmyfood.imamf.scanmyfood.Model;
 
-public class List_Makanan {
+public class CateringFood {
 
     private String idMakanan, namaMakanan, namaCatering, kaloriMakanan, harga, nomorHp, deskripsi, photo;
     private Double latitude, longitude;
 
-    public List_Makanan() {
+    public CateringFood() {
     }
 
-    public List_Makanan(String idMakanan, String namaMakanan, String namaCatering, String kaloriMakanan, String harga, String nomorHp, String deskripsi, Double latitude, Double longitude, String photo) {
+    public CateringFood(String idMakanan, String namaMakanan, String namaCatering, String kaloriMakanan, String harga, String nomorHp, String deskripsi, Double latitude, Double longitude, String photo) {
         this.idMakanan = idMakanan;
         this.namaMakanan = namaMakanan;
         this.namaCatering = namaCatering;
@@ -99,5 +99,64 @@ public class List_Makanan {
 
     public void setIdMakanan(String idMakanan) {
         this.idMakanan = idMakanan;
+    }
+
+    public static class Builder{
+        private String idMakanan, namaMakanan, namaCatering, kaloriMakanan, harga, nomorHp, deskripsi, photo;
+        private Double latitude, longitude;
+
+        public Builder setIdMakanan(String idMakanan) {
+            this.idMakanan = idMakanan;
+            return this;
+        }
+
+        public Builder setNamaMakanan(String namaMakanan) {
+            this.namaMakanan = namaMakanan;
+            return this;
+        }
+
+        public Builder setNamaCatering(String namaCatering) {
+            this.namaCatering = namaCatering;
+            return this;
+        }
+
+        public Builder setKaloriMakanan(String kaloriMakanan) {
+            this.kaloriMakanan = kaloriMakanan;
+            return this;
+        }
+
+        public Builder setHarga(String harga) {
+            this.harga = harga;
+            return this;
+        }
+
+        public Builder setNomorHp(String nomorHp) {
+            this.nomorHp = nomorHp;
+            return this;
+        }
+
+        public Builder setDeskripsi(String deskripsi) {
+            this.deskripsi = deskripsi;
+            return this;
+
+        }
+
+        public Builder setPhoto(String photo) {
+            this.photo = photo;
+            return this;
+
+        }
+
+        public Builder setLatitude(Double latitude) {
+            this.latitude = latitude;
+            return this;
+
+        }
+
+        public Builder setLongitude(Double longitude) {
+            this.longitude = longitude;
+            return this;
+
+        }
     }
 }
