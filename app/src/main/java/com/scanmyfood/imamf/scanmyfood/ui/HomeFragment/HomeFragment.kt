@@ -180,6 +180,7 @@ class HomeFragment : Fragment(), homeHistoryListener {
                 e.printStackTrace()
             }
 
+//            "DefaultCustomModel_1553789228"
             val result = visualRecognition.classify(classifyOptions!!).execute()
 
             Log.d("nasgor", result.toString())
@@ -213,8 +214,10 @@ class HomeFragment : Fragment(), homeHistoryListener {
         aviLoadingIndicatorView.smoothToHide()
     }
 
-    override fun onItemClick(id: String?, name: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onItemClick(name: String?) {
+        val i = Intent(activity, FoodFact::class.java)
+        i.putExtra("productName", name)
+        startActivity(i)
     }
 
     fun getFoodData(foodName: String){

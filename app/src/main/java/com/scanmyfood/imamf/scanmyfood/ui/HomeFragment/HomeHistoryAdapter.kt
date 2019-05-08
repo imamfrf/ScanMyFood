@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import com.scanmyfood.imamf.scanmyfood.Model.Food
@@ -32,6 +33,9 @@ class HomeHistoryAdapter(private val listItems: List<Food>, val listener: homeHi
 
         Glide.with(context).load(item.img).into(holder.img_thumbnail_home as ImageView)
 
+        holder.layout_history?.setOnClickListener{
+            listener.onItemClick(holder.tv_history_home?.text as String?)
+        }
 
 //        holder.cardView.setOnClickListener {
 //            listener.onItemClick(item.id, item.name)
@@ -47,13 +51,14 @@ class HomeHistoryAdapter(private val listItems: List<Food>, val listener: homeHi
        // val cardView: CardView
         val tv_history_home: TextView?
         val img_thumbnail_home: ImageView?
+        val layout_history: LinearLayout?
 
 
         // MARK: - Initialization
         init {
             tv_history_home = itemView?.findViewById(R.id.tv_history_home)
             img_thumbnail_home = itemView?.findViewById(R.id.img_thumbnail_home)
-           // cardView = itemView?.findViewById(R.id.cardView) as CardView
+            layout_history = itemView?.findViewById(R.id.layout_history)
 
         }
     }
